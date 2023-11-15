@@ -38,9 +38,10 @@ namespace fre::fixed_income {
 	template<class U = double, class C = double, class T = double, class F = double>
 	inline auto present_value(const instrument<U, C>& i, const pwflat::curve<T, F>& c)
 	{
-		auto p = C(0)*F(0);
-
-		p = i.size() * c.size(); // !!! implement
+		auto p = 0;
+		for (int j = 0; j < i->size(); j++) {
+			p += i->cash()[j] * c.discount(i->time()[j]);
+		}
 
 		return p;
 	}
